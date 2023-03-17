@@ -1,0 +1,14 @@
+# docker-compose up -d
+# docker-compose down
+version: '3.4'
+
+services:
+  frontend:
+    image: frontend
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    environment:
+      NODE_ENV: production
+    ports:
+      - 85:80
