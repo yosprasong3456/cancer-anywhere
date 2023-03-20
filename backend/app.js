@@ -8,6 +8,10 @@ const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const personHisRouter = require('./routes/personHis');
 const helmet = require("helmet");
+const cron = require('node-cron');
+const hisController = require('./controllers/hisController')
+
+
 const app = express();
 app.use(helmet());
 app.use(cors())
@@ -20,6 +24,17 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+const task = cron.schedule('45 15 * * *', async() =>{
+  console.log('Tik');
+  console.log('Run task every minute');
+  const line = await hisController.lineNortify()
+}, {
+  scheduled: true,
+  timezone: "Asia/Bangkok"
+});
+
+task.start()
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);

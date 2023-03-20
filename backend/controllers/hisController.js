@@ -1,3 +1,4 @@
+
 const axios = require('axios')
 const base_api = 'https://canceranywhere.com/caw-gateway-production/';
 const config = require('../config/index')
@@ -6,6 +7,32 @@ const token = `Basic ${config.TOKEN_API}`
 const db = require('../config/db')
 const knex = db.knexBuilder
 
+const lineNotify = require('line-notify-nodejs')(config.LINE);
+const dayjs = require('dayjs')
+require('dayjs/locale/th')
+
+const today =()=>{
+    const today = new Date()
+    return `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`
+}
+
+exports.lineNortify =async()=>{
+    try {
+        const data = await personHis()
+        const dataCA = await personHisCA()
+        console.log("day js DD-MM-YYYY", dayjs(today()).locale('th').format('DD MMMM YYYY'))
+        let day = dayjs(today()).locale('th').format('DD MMMM YYYY')
+        const year = day.split(" ")
+        day = `${year[0]} ${year[1]} ${parseInt(year[2]) + 543}`
+        let hnNum = parseInt(year[2]) + 543
+        let hnToString = hnNum.toString()
+        let message = `\n วันที่ ${day} \n มีผู้ป่วยรายใหม่ ${data.length} คน\n ผู้ป่วยรหัส HN:4${hnToString.substring(2,4)}\n ส่งข้อมูลแล้ว ${dataCA.length} คน \n ส่งข้อมูลได้ที่ : ${config.FRONTEND_URL}`
+        const lineNoti = await lineNotify.notify({message: message})
+        return null
+    } catch (error) {
+        return null
+    }
+}
 
 const uploadData =(params)=>{
     return axios.post(base_api+`patient`, params, {
@@ -167,4 +194,8 @@ exports.sendData = async (req, res, next) => {
                 data: errorText.toString()
         })
     }
+}
+const lineNoti= async(params)=>{
+    const lineNoti = await lineNotify.notify({message: '\n มีผู้ป่วยรายใหม่วันที่ ... จำนวน ... คน'})
+    return
 }
