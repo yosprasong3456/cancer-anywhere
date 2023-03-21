@@ -16,6 +16,8 @@ const today =()=>{
     return `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`
 }
 
+
+
 exports.lineNortify =async()=>{
     try {
         const data = await personHis()
@@ -30,6 +32,55 @@ exports.lineNortify =async()=>{
         const lineNoti = await lineNotify.notify({message: message})
         return null
     } catch (error) {
+        return null
+    }
+}
+
+exports.cronJobUpload =async()=>{
+    try {
+        const person = await personHis()
+        let sendData = []
+        let sendError = []
+        if(person.length){
+            person.map(async(val, index)=>{
+                console.log(val)
+                sendData.push(index)
+                const sendPerson = await uploadData(val)
+                
+                if(sendPerson.data.message === "DONE"){
+                    const updatePerson = await updatePerson(val.person_id)
+                    const cancerBody ={
+                        cid : val.cid,
+                        visit_date : val.visit_date,
+                        behaviour_code : val.behaviour_code,
+                        finance_support_code: val.finance_support_code,
+                        icd10_code : val.diagnosis_drg
+                    } 
+                    const sended = await sendCancer(cancerBody)
+                    console.log(sended.data)
+                    if(sended.data.message === "DONE"){
+                        const updateCancer = await updatePersonCancer(val.person_id)
+                        sendData.push(index)
+                    }
+                }else{
+                    sendError.push(index)
+                }
+                
+                console.log(sendData.length)
+            })
+            if(sendData.length){
+                let day = dayjs(today()).locale('th').format('DD MMMM YYYY')
+                const year = day.split(" ")
+                day = `${year[0]} ${year[1]} ${parseInt(year[2]) + 543}`
+                let message = `\n วันที่ ${day} \n ส่งข้อมูลผู้ป่วยรายใหม่สำเร็จ ${sendData.length} คน\n ส่งข้อมูลผู้ป่วยรายใหม่ล้มเหลว ${sendError.length} คน`
+                const lineNoti = await lineNotify.notify({message: message})
+            }
+            
+
+        }
+        return null
+    } catch (error) {
+        console.log(error)
         return null
     }
 }

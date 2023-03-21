@@ -33,9 +33,15 @@ const task = cron.schedule('45 15 * * *', async() =>{
   scheduled: true,
   timezone: "Asia/Bangkok"
 });
-
 task.start()
 
+const taskUpload = cron.schedule('55 15 * * *', async() =>{
+  hisController.cronJobUpload()
+}, {
+  scheduled: true,
+  timezone: "Asia/Bangkok"
+});
+taskUpload.start()
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/personHis', personHisRouter);
