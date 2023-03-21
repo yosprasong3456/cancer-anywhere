@@ -1,12 +1,13 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import React from "react";
 import { titleName } from "../constants";
 
 type Props = {
   personData: any;
+  search?: number;
 };
 
-const PersonData = ({ personData }: Props) => {
+const PersonData = ({ personData, search }: Props) => {
   return (
     <Box textAlign="start" p={1}>
       {/* <Typography sx={{ wordWrap: "anywhere" }}>
@@ -28,29 +29,38 @@ const PersonData = ({ personData }: Props) => {
         เบอร์โทรศัพท์ : {personData.telephone_1}
         <br />
         Diagnosis : {personData.diagnosis_drg} <br />
-        สถานะส่งข้อมูล :{" "}
-        {personData.cancer_check > 0 ? (
-          <span
-            style={{
-              backgroundColor: "limegreen",
-              padding: 2,
-              borderRadius: 5,
-              color: "aliceblue",
-            }}
-          >
-            ส่งข้อมูลแล้ว
-          </span>
+        {!search ? (
+          personData.cancer_check > 0 ? (
+            <>
+              {"สถานะส่งข้อมูล : "}
+              <span
+                style={{
+                  backgroundColor: "limegreen",
+                  padding: 2,
+                  borderRadius: 5,
+                  color: "aliceblue",
+                }}
+              >
+                ส่งข้อมูลแล้ว
+              </span>
+            </>
+          ) : (
+            <>
+              {"สถานะส่งข้อมูล : "}
+              <span
+                style={{
+                  backgroundColor: "red",
+                  padding: 2,
+                  borderRadius: 5,
+                  color: "aliceblue",
+                }}
+              >
+                ยังไม่ส่งข้อมูล
+              </span>
+            </>
+          )
         ) : (
-          <span
-            style={{
-              backgroundColor: "red",
-              padding: 2,
-              borderRadius: 5,
-              color: "aliceblue",
-            }}
-          >
-            ยังไม่ส่งข้อมูล
-          </span>
+          <Button variant="contained">ส่งข้อมูล</Button>
         )}
       </Typography>
     </Box>

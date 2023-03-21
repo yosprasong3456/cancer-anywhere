@@ -29,6 +29,7 @@ import PersonCA from "./pages/PersonCA";
 import { SnackbarProvider } from "notistack";
 import Footer from "./components/Footer";
 import lightGreen from "@mui/material/colors/lightGreen";
+import SearchPerson from "./pages/SearchPerson";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -87,6 +88,7 @@ function App() {
             <Route path="/welcome" element={<FirstPage />} />
             <Route path="/home" element={<Home />} />
             <Route path="/personCA" element={<PersonCA />} />
+            <Route path="/search" element={<SearchPerson />} />
             <Route path="/login" element={<Login />} />
             <Route path="*" element={<ErrorPage />} />
           </Route>

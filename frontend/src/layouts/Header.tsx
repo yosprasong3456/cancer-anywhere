@@ -34,8 +34,9 @@ import {
 const pages = ["ผู้ป่วยมะเร็ง HIS", "ผู้ป่วยมะเร็ง API", "Blog"];
 const settings = ["Logout"];
 const navButton = [
-  { name: "ผู้ป่วยมะเร็งรายใหม่", router: "/home" },
-  { name: "ผู้ป่วยส่ง CA", router: "/personCA" },
+  { name: "👋🏽 ผู้ป่วยมะเร็งรายใหม่", router: "/home" },
+  { name: "🏥 ผู้ป่วยส่ง CA", router: "/personCA" },
+  { name: "🔎 ค้นหาผู้ป่วย", router: "/search" },
 ];
 function Header() {
   const dispatch = useAppDispatch();

@@ -14,6 +14,9 @@ export interface AuthState {
   personAll: any;
   personOne: any;
   personCA: any;
+  personSearch: any;
+  errorSearch: boolean;
+  searching: boolean;
 }
 
 const initialState: AuthState = {
@@ -23,7 +26,38 @@ const initialState: AuthState = {
   personAll: [],
   personOne: null,
   personCA: [],
+  personSearch: null,
+  errorSearch: false,
+  searching: false,
 };
+
+export const sendPersonOne = createAsyncThunk(
+  "personHis/sendPersonOne",
+  async (params: string) => {
+    let result = await httpClient.post<any>(server.SEND_PERSON_ONE, params);
+    if (result.data.message == "success") {
+      return result.data;
+    } else {
+      throw Error();
+    }
+
+    //   throw Error();
+  }
+);
+
+export const getPersonSearch = createAsyncThunk(
+  "personHis/getPersonSearch",
+  async (params: string) => {
+    let result = await httpClient.get<any>(server.PERSON_SEARCH + params);
+    if (result.data.message == "success") {
+      return result.data.data;
+    } else {
+      throw Error();
+    }
+
+    //   throw Error();
+  }
+);
 
 export const getPersonHis = createAsyncThunk(
   "personHis/getPersonHis",
@@ -71,7 +105,11 @@ export const sendDataToCA = createAsyncThunk(
 const personHisSlice = createSlice({
   name: "personHis",
   initialState: initialState,
-  reducers: {},
+  reducers: {
+    resetSearch: (state: AuthState, action: PayloadAction<void>) => {
+      state.personSearch = null;
+    },
+  },
   extraReducers: (builder) => {
     // login
     builder.addCase(getPersonHis.pending, (state, action) => {
@@ -104,10 +142,24 @@ const personHisSlice = createSlice({
       state.isError = true;
       state.isLoading = false;
     });
+    builder.addCase(getPersonSearch.pending, (state, action) => {
+      state.searching = true;
+      state.personSearch = null;
+      state.errorSearch = false;
+    });
+    builder.addCase(getPersonSearch.fulfilled, (state, action) => {
+      state.personSearch = action.payload;
+      state.searching = false;
+      state.errorSearch = false;
+    });
+    builder.addCase(getPersonSearch.rejected, (state, action) => {
+      state.searching = false;
+      state.errorSearch = true;
+    });
   },
 });
 
-export const {} = personHisSlice.actions;
+export const { resetSearch } = personHisSlice.actions;
 export const personHisSelector = (store: RootState) => store.personHisSlice;
 
 export default personHisSlice.reducer;
