@@ -48,7 +48,6 @@ exports.cronJobUpload = async () => {
     if (person.length) {
       person.map(async (val, index) => {
         console.log(val);
-        sendData.push(index);
         const sendPerson = await uploadData(val);
 
         if (sendPerson.data.message === "DONE") {
