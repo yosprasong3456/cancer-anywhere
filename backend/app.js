@@ -35,7 +35,8 @@ const task = cron.schedule('45 15 * * *', async() =>{
 });
 task.start()
 
-const taskUpload = cron.schedule('55 15 * * *', async() =>{
+const taskUpload = cron.schedule('01 16 * * *', async() =>{
+  console.log('cronJob')
   hisController.cronJobUpload()
 }, {
   scheduled: true,

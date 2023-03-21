@@ -47,11 +47,11 @@ exports.cronJobUpload = async () => {
     let sendError = [];
     if (person.length) {
       person.map(async (val, index) => {
-        console.log(val);
+        console.log(val.person_id);
         const sendPerson = await uploadData(val);
 
         if (sendPerson.data.message === "DONE") {
-          const updatePerson = await updatePerson(val.person_id);
+          const updateP = await updatePerson(val.person_id);
           const cancerBody = {
             cid: val.cid,
             visit_date: val.visit_date,
@@ -62,8 +62,8 @@ exports.cronJobUpload = async () => {
           const sended = await sendCancer(cancerBody);
           console.log(sended.data);
           if (sended.data.message === "DONE") {
-            const updateCancer = await updatePersonCancer(val.person_id);
             sendData.push(index);
+            const updateCancer = await updatePersonCancer(val.person_id);
           }
         } else {
           sendError.push(index);
@@ -78,11 +78,13 @@ exports.cronJobUpload = async () => {
         let message = `\n วันที่ ${day} \n ส่งข้อมูลผู้ป่วยรายใหม่สำเร็จ ${sendData.length} คน\n ส่งข้อมูลผู้ป่วยรายใหม่ล้มเหลว ${sendError.length} คน`;
         const lineNoti = await lineNotify.notify({ message: message });
       }
+    } else {
+      console.log("cron");
     }
-    return null;
+    return;
   } catch (error) {
     console.log(error);
-    return null;
+    return;
   }
 };
 
