@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "nodemon ./bin/www",
-    "serve": "node ./bin/www"
+    "serve": "node ./bin/www",
+    "test": "node app.js"
   },
   "dependencies": {
     "axios": "^0.21.1",

@@ -8,7 +8,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
+  frontend:
 
     runs-on: ubuntu-latest
     defaults:
@@ -25,7 +25,7 @@ jobs:
     - run: npm install
     - run: npm run build
 
-  buildbackend:
+  backend:
 
     runs-on: ubuntu-latest
     defaults:
@@ -40,8 +40,7 @@ jobs:
         cache: 'npm'
         cache-dependency-path: './backend/package-lock.json'
     - run: npm install
-    - run: npm run serve
-    - run: Ctrl-C
+    - run: npm run test
     # - run: cd ..
     # - run: cd ./backend/
     # - run: npm install
