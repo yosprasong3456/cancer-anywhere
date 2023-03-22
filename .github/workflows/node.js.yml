@@ -24,6 +24,24 @@ jobs:
         cache-dependency-path: './frontend/package-lock.json'
     - run: npm install
     - run: npm run build
+
+  buildbackend:
+
+    runs-on: ubuntu-latest
+    defaults:
+       run:
+         working-directory: ./backend/
+    steps:
+    - uses: actions/checkout@v3
+    - name: Use Node.js 18
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+        cache: 'npm'
+        cache-dependency-path: './backend/package-lock.json'
+    - run: npm install
+    - run: npm run serve
+    - run: Ctrl-C
     # - run: cd ..
     # - run: cd ./backend/
     # - run: npm install
