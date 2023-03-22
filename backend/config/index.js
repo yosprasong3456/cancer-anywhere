@@ -6,7 +6,7 @@ module.exports = {
     // SECRET: 'mhIR55QqHYHXoBSASSPqhja5ESjPU86LwvEktCrKTWDJxoScuwCV3weODrEnxPz',
     TOKEN_API: process.env.TOKEN_API,
     TOKEN_KEY: process.env.TOKEN_KEY,
-    LINE:process.env.LINE_TOKEN,
+    LINE:process.env.LINE_TOKEN || 'mhIR55QqHYHXoBSASSPqhja5DrEnxPz',
     FRONTEND_URL: process.env.FRONTEND,
 }
 

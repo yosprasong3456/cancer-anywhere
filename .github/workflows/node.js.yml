@@ -23,4 +23,4 @@ jobs:
         cache: 'npm'
         cache-dependency-path: './backend/package-lock.json'
     - run: npm install
-    - run: npm run dev
+    - run: npm run serve
