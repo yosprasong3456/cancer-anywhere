@@ -11,7 +11,9 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-
+    defaults:
+       run:
+         working-directory: ./backend/
     steps:
     - uses: actions/checkout@v3
     - name: Use Node.js 18
@@ -20,11 +22,5 @@ jobs:
         node-version: '18'
         cache: 'npm'
         cache-dependency-path: './backend/package-lock.json'
-    - run: 
-        working-directory: ./backend/
-    - run: npm install
-    - run: npm run dev
-    - run: 
-        working-directory: ./frontend/
     - run: npm install
     - run: npm run dev
