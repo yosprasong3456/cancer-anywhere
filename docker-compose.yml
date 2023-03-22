@@ -14,6 +14,7 @@ services:
     build: frontend/
     image: ca-fontend
     container_name: ca-fontend-con
+    restart: always
     ports:
       - 83:80
     depends_on:
