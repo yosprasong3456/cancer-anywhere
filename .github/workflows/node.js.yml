@@ -27,6 +27,7 @@ jobs:
     - run: cd/backend
     - run: npm i
     - run: npm run dev
-    - run: cd/fontend
+    - run: cd ..
+    - run: cd/frontend
     - run: npm i
     - run: npm start
