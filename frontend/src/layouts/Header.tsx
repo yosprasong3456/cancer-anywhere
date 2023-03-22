@@ -83,6 +83,7 @@ function Header() {
   };
 
   const changePage = (params: string) => {
+    console.log('changePage')
     navigate(params);
     handleClose();
   };
