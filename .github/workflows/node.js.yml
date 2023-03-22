@@ -19,10 +19,6 @@ jobs:
       with:
         node-version: '18'
         cache: 'npm'
-    - run: cd/backend
-    - run: npm install
-    - run: npm run dev
-    - run: cd ..
-    - run: cd/frontend
+        cache-dependency-path: './backend/package-lock.json'
     - run: npm install
     - run: npm run dev
