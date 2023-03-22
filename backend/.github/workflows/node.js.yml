@@ -10,7 +10,7 @@ on:
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     strategy:
       matrix:
@@ -24,10 +24,5 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: cd/backend
     - run: npm i
     - run: npm run dev
-    - run: cd ..
-    - run: cd/frontend
-    - run: npm i
-    - run: npm start
