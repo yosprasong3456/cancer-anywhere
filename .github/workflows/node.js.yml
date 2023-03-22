@@ -21,6 +21,11 @@ jobs:
       with:
         node-version: '18'
         cache: 'npm'
-        cache-dependency-path: './backend/package-lock.json'
+        cache-dependency-path: './froneend/package-lock.json'
     - run: npm install
     - run: npm run build
+    - run:
+         working-directory: ./backend/
+    - run: npm install
+    - run: npm run serve
+    - run: Ctrl-C
