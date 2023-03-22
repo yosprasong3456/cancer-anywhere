@@ -24,8 +24,8 @@ jobs:
         cache-dependency-path: './froneend/package-lock.json'
     - run: npm install
     - run: npm run build
-    - run:
-         working-directory: ./backend/
+    - run: cd ..
+    - run: cd ./backend/
     - run: npm install
     - run: npm run serve
     - run: Ctrl-C
