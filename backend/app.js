@@ -37,7 +37,7 @@ task.start()
 
 const taskUpload = cron.schedule('01 16 * * *', async() =>{
   console.log('cronJob')
-  hisController.cronJobUpload()
+  const sendData = await hisController.cronJobUpload()
 }, {
   scheduled: true,
   timezone: "Asia/Bangkok"

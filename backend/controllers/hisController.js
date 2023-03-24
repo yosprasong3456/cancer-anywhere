@@ -71,16 +71,17 @@ exports.cronJobUpload = async () => {
 
         console.log(sendData.length);
       });
-      if (sendData.length) {
-        let day = dayjs(today()).locale("th").format("DD MMMM YYYY");
-        const year = day.split(" ");
-        day = `${year[0]} ${year[1]} ${parseInt(year[2]) + 543}`;
-        let message = `\n วันที่ ${day} \n ส่งข้อมูลผู้ป่วยรายใหม่สำเร็จ ${sendData.length} คน\n ส่งข้อมูลผู้ป่วยรายใหม่ล้มเหลว ${sendError.length} คน`;
-        const lineNoti = await lineNotify.notify({ message: message });
-      }
+      // if (sendData.length) {
+
+      // }
     } else {
       console.log("cron");
     }
+    let day = dayjs(today()).locale("th").format("DD MMMM YYYY");
+    const year = day.split(" ");
+    day = `${year[0]} ${year[1]} ${parseInt(year[2]) + 543}`;
+    let message = `\n วันที่ ${day} \n ส่งข้อมูลผู้ป่วยรายใหม่สำเร็จ ${sendData.length} คน\n ส่งข้อมูลผู้ป่วยรายใหม่ล้มเหลว ${sendError.length} คน`;
+    const lineNoti = await lineNotify.notify({ message: message });
     return;
   } catch (error) {
     console.log(error);
