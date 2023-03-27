@@ -6,6 +6,7 @@ services:
     build: backend/
     image: ca-backend
     container_name: ca-backend-con
+    restart: always
     ports:
       - 3005:3000
     networks:
@@ -14,7 +15,6 @@ services:
     build: frontend/
     image: ca-fontend
     container_name: ca-fontend-con
-    restart: always
     ports:
       - 83:80
     depends_on:

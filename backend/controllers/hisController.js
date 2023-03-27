@@ -69,7 +69,9 @@ exports.cronJobUpload = async () => {
           sendError.push(index);
         }
 
-        console.log(sendData.length);
+        if (person.length - 1 == index) {
+          cronLineNoti(sendData.length, sendError.length);
+        }
       });
       // if (sendData.length) {
 
@@ -77,15 +79,24 @@ exports.cronJobUpload = async () => {
     } else {
       console.log("cron");
     }
-    let day = dayjs(today()).locale("th").format("DD MMMM YYYY");
-    const year = day.split(" ");
-    day = `${year[0]} ${year[1]} ${parseInt(year[2]) + 543}`;
-    let message = `\n วันที่ ${day} \n ส่งข้อมูลผู้ป่วยรายใหม่สำเร็จ ${sendData.length} คน\n ส่งข้อมูลผู้ป่วยรายใหม่ล้มเหลว ${sendError.length} คน`;
-    const lineNoti = await lineNotify.notify({ message: message });
+
     return;
   } catch (error) {
     console.log(error);
     return;
+  }
+};
+
+const cronLineNoti = async (count1, count2) => {
+  let day = dayjs(today()).locale("th").format("DD MMMM YYYY");
+  const year = day.split(" ");
+  day = `${year[0]} ${year[1]} ${parseInt(year[2]) + 543}`;
+  let message = `\n วันที่ ${day} \n ส่งข้อมูลผู้ป่วยรายใหม่สำเร็จ ${count1} คน\n ส่งข้อมูลผู้ป่วยรายใหม่ล้มเหลว ${count2} คน`;
+  try {
+    const lineNoti = await lineNotify.notify({ message: message });
+    console.log(lineNoti);
+  } catch (error) {
+    console.log(error);
   }
 };
 
