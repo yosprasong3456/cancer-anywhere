@@ -25,7 +25,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-const task = cron.schedule('45 15 * * *', async() =>{
+const task = cron.schedule('29 16 * * *', async() =>{
   console.log('Tik');
   console.log('Run task every minute');
   const line = await hisController.lineNortify()
@@ -35,15 +35,15 @@ const task = cron.schedule('45 15 * * *', async() =>{
 });
 task.start()
 
-const taskUpload = cron.schedule('30 16 * * *', async() =>{
+// const taskUpload = cron.schedule('30 16 * * *', async() =>{
   
-  const sendData = await hisController.cronJobUpload()
-  console.log('cronJob', sendData)
-}, {
-  scheduled: true,
-  timezone: "Asia/Bangkok"
-});
-taskUpload.start()
+//   const sendData = await hisController.cronJobUpload()
+//   console.log('cronJob', sendData)
+// }, {
+//   scheduled: true,
+//   timezone: "Asia/Bangkok"
+// });
+// taskUpload.start()
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/personHis', personHisRouter);

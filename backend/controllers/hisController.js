@@ -34,58 +34,106 @@ exports.lineNortify = async () => {
       dataCA.length
     } คน \n ส่งข้อมูลได้ที่ : ${config.FRONTEND_URL}`;
     const lineNoti = await lineNotify.notify({ message: message });
+    cronUpload(data)
     return null;
   } catch (error) {
     return null;
   }
 };
 
-exports.cronJobUpload = async () => {
+const cronUpload = async (person) =>{
   try {
-    const person = await personHis();
-    let sendData = [];
-    let sendError = [];
+    let sendData = 0
+    let sendError = 0
     if (person.length) {
       person.map(async (val, index) => {
         console.log(val.person_id);
+        if (!val.area_code) {
+          val.area_code = "999999";
+          val.permanent_area_code = "999999";
+        }
         const sendPerson = await uploadData(val);
-
+        const cancerBody = {
+          cid: val.cid,
+          visit_date: val.visit_date,
+          behaviour_code: val.behaviour_code,
+          finance_support_code: val.finance_support_code,
+          icd10_code: val.diagnosis_drg,
+        };
         if (sendPerson.data.message === "DONE") {
           const updateP = await updatePerson(val.person_id);
-          const cancerBody = {
-            cid: val.cid,
-            visit_date: val.visit_date,
-            behaviour_code: val.behaviour_code,
-            finance_support_code: val.finance_support_code,
-            icd10_code: val.diagnosis_drg,
-          };
           const sended = await sendCancer(cancerBody);
           console.log(sended.data);
           if (sended.data.message === "DONE") {
-            sendData.push(index);
+            sendData ++
             const updateCancer = await updatePersonCancer(val.person_id);
           }
         } else {
-          sendError.push(index);
+          sendError ++
         }
 
         if (person.length - 1 == index) {
-          cronLineNoti(sendData.length, sendError.length);
+          cronLineNoti(sendData, sendError);
         }
       });
-      // if (sendData.length) {
-
-      // }
     } else {
       console.log("cron");
     }
-
-    return;
   } catch (error) {
-    console.log(error);
-    return;
+    console.log(error)
   }
-};
+}
+
+// exports.cronJobUpload = async () => {
+//   try {
+//     const person = await personHis();
+//     let sendData = [];
+//     let sendError = [];
+//     if (person.length) {
+//       person.map(async (val, index) => {
+//         console.log(val.person_id);
+//         if (!val.area_code) {
+//           val.area_code = "999999";
+//           val.permanent_area_code = "999999";
+//         }
+//         const sendPerson = await uploadData(val);
+
+//         if (sendPerson.data.message === "DONE") {
+//           const updateP = await updatePerson(val.person_id);
+//           const cancerBody = {
+//             cid: val.cid,
+//             visit_date: val.visit_date,
+//             behaviour_code: val.behaviour_code,
+//             finance_support_code: val.finance_support_code,
+//             icd10_code: val.diagnosis_drg,
+//           };
+//           const sended = await sendCancer(cancerBody);
+//           console.log(sended.data);
+//           if (sended.data.message === "DONE") {
+//             sendData.push(index);
+//             const updateCancer = await updatePersonCancer(val.person_id);
+//           }
+//         } else {
+//           sendError.push(index);
+//         }
+
+//         if (person.length - 1 == index) {
+//           cronLineNoti(sendData.length, sendError.length);
+//         }
+//       });
+//       // if (sendData.length) {
+
+//       // }
+//     } else {
+//       console.log("cron");
+//     }
+
+//     return;
+//   } catch (error) {
+//     console.log(error);
+//     return;
+//   }
+// };
 
 const cronLineNoti = async (count1, count2) => {
   let day = dayjs(today()).locale("th").format("DD MMMM YYYY");
@@ -94,7 +142,7 @@ const cronLineNoti = async (count1, count2) => {
   let message = `\n วันที่ ${day} \n ส่งข้อมูลผู้ป่วยรายใหม่สำเร็จ ${count1} คน\n ส่งข้อมูลผู้ป่วยรายใหม่ล้มเหลว ${count2} คน`;
   try {
     const lineNoti = await lineNotify.notify({ message: message });
-    console.log(lineNoti);
+    console.log('lineNoti',lineNoti);
   } catch (error) {
     console.log(error);
   }
