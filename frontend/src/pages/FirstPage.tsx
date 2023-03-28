@@ -9,6 +9,7 @@ import {
   CardMedia,
   Box,
   Paper,
+  CircularProgress,
 } from "@mui/material";
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
@@ -131,10 +132,13 @@ const FirstPage = (props: Props) => {
               elevation={6}
             >
               <Typography gutterBottom variant="h3" component="div">
-                {personHisReducer.personAll.length
-                  ? personHisReducer.personAll.length
-                  : ""}{" "}
-                คน
+                {personHisReducer.personAll.length ? (
+                  `${personHisReducer.personAll.length} คน`
+                ) : personHisReducer.isLoading ? (
+                  <CircularProgress color="success" />
+                ) : (
+                  `0 คน`
+                )}
               </Typography>
               <Typography variant="h5" color="text.secondary">
                 ผู้ป่วยมะเร็งรายใหม่
@@ -159,10 +163,13 @@ const FirstPage = (props: Props) => {
               elevation={6}
             >
               <Typography gutterBottom variant="h3" component="div">
-                {personHisReducer.personCA.length
-                  ? personHisReducer.personCA.length
-                  : ""}{" "}
-                คน
+                {personHisReducer.personCA.length ? (
+                  `${personHisReducer.personCA.length} คน`
+                ) : personHisReducer.isLoadingCA ? (
+                  <CircularProgress color="success" />
+                ) : (
+                  `0 คน`
+                )}
               </Typography>
               <Typography variant="h5" color="text.secondary">
                 ผู้ป่วยมะเร็งที่ส่งข้อมูลแล้ว

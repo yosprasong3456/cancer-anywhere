@@ -9,6 +9,7 @@ export interface AuthState {
   // loginResult?: LoginResult;
   // registerResult?: RegisterResult;
   isLoading: boolean;
+  isLoadingCA: boolean;
   postLoading: boolean;
   isError: boolean;
   personAll: any;
@@ -21,6 +22,7 @@ export interface AuthState {
 
 const initialState: AuthState = {
   isLoading: true,
+  isLoadingCA: true,
   postLoading: true,
   isError: false,
   personAll: [],
@@ -132,15 +134,15 @@ const personHisSlice = createSlice({
     });
     builder.addCase(getPersonHisCA.pending, (state, action) => {
       state.isError = false;
-      state.isLoading = true;
+      state.isLoadingCA = true;
     });
     builder.addCase(getPersonHisCA.fulfilled, (state, action) => {
       state.personCA = action.payload;
-      state.isLoading = false;
+      state.isLoadingCA = false;
     });
     builder.addCase(getPersonHisCA.rejected, (state, action) => {
       state.isError = true;
-      state.isLoading = false;
+      state.isLoadingCA = false;
     });
     builder.addCase(getPersonSearch.pending, (state, action) => {
       state.searching = true;

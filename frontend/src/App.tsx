@@ -59,7 +59,7 @@ function App() {
     },
     palette: {
       mode: authReducer.themeMode ? "dark" : "light",
-      primary: !import.meta.env.DEV ? { main: "#C1272D" } : blue,
+      primary: !import.meta.env.DEV ? { main: "#ccff90" } : { main: "#5997b2" },
 
       //   main: blue["A200"],
 

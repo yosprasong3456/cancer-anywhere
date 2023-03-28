@@ -270,7 +270,7 @@ function PersonCA({}: Props) {
               ) : (
                 <>
                   {personHisReducer.isError && <Typography>Error</Typography>}
-                  {personHisReducer.isLoading && (
+                  {personHisReducer.isLoadingCA && (
                     <Typography>Loading ..</Typography>
                   )}
                 </>
@@ -321,7 +321,7 @@ function PersonCA({}: Props) {
               ) : (
                 <>
                   {personHisReducer.isError && <Typography>Error</Typography>}
-                  {personHisReducer.isLoading && (
+                  {personHisReducer.isLoadingCA && (
                     <Typography>Loading ..</Typography>
                   )}
                 </>
