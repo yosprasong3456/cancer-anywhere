@@ -23,13 +23,17 @@ import { useAppDispatch } from "../store/store";
 import { useEffect } from "react";
 import SwitchMode from "../components/SwitchMode";
 import {
+  Badge,
+  BadgeProps,
   Drawer,
   List,
   ListItem,
   ListItemAvatar,
   ListItemText,
   Stack,
+  styled,
 } from "@mui/material";
+import { personHisSelector } from "../store/slices/personHisSlice";
 
 const pages = ["ผู้ป่วยมะเร็ง HIS", "ผู้ป่วยมะเร็ง API", "Blog"];
 const settings = ["Logout"];
@@ -41,6 +45,8 @@ const navButton = [
 function Header() {
   const dispatch = useAppDispatch();
   const authReducer = useSelector(authSelector);
+  const personHisReducer = useSelector(personHisSelector);
+  const [navNum, setNavNum] = React.useState(localStorage.getItem("badge"));
   const navigate = useNavigate();
   useEffect(() => {
     console.log(authReducer.authData);
@@ -82,10 +88,17 @@ function Header() {
     navigate("/login");
   };
 
-  const changePage = (params: string) => {
-    console.log('changePage')
-    navigate(params);
-    handleClose();
+  const changePage = (params: string, pageIndex?: number) => {
+    if (pageIndex === 0) {
+      localStorage.setItem("badge", personHisReducer.personAll.length);
+      setNavNum(personHisReducer.personAll.length);
+      navigate(params);
+      handleClose();
+    } else {
+      console.log("changePage");
+      navigate(params);
+      handleClose();
+    }
   };
 
   return (
@@ -131,25 +144,6 @@ function Header() {
               );
             })}
 
-            {/* <Box
-              boxShadow={5}
-              m={1}
-              borderRadius={1}
-              onClick={() => changePage("/personCA")}
-            >
-              <ListItem>
-                <ListItemAvatar>
-                  <Avatar>
-                    <WorkIcon />
-                  </Avatar>
-                </ListItemAvatar>
-                <ListItemText
-                  primary="ผู้ป่วยส่ง CA"
-                  secondary="Cancer Anywhere"
-                />
-              </ListItem>
-            </Box> */}
-
             <Box
               boxShadow={5}
               m={1}
@@ -194,20 +188,6 @@ function Header() {
             </Box>
           </Box>
 
-          {/* <Menu
-            id="fade-menu"
-            MenuListProps={{
-              "aria-labelledby": "fade-button",
-            }}
-            anchorEl={anchorEl}
-            open={open}
-            onClose={handleClose}
-          >
-            <MenuItem onClick={handleClose}>Profile</MenuItem>
-            <MenuItem onClick={handleClose}>My account</MenuItem>
-            <MenuItem onClick={handleClose}>Logout</MenuItem>
-          </Menu> */}
-
           <Box
             sx={{
               flexGrow: 1,
@@ -243,8 +223,24 @@ function Header() {
             >
               {navButton.map((data: any, index: number) => {
                 return (
-                  <MenuItem key={index} onClick={() => navigate(data.router)}>
-                    <Typography textAlign="center">{data.name}</Typography>
+                  <MenuItem
+                    key={index}
+                    onClick={() => changePage(data.router, index)}
+                  >
+                    {index === 0 ? (
+                      <StyledBadge
+                        badgeContent={
+                          navNum === personHisReducer.personAll.length
+                            ? 0
+                            : personHisReducer.personAll.length
+                        }
+                        color="error"
+                      >
+                        <Typography textAlign="center">{data.name}</Typography>
+                      </StyledBadge>
+                    ) : (
+                      <Typography textAlign="center">{data.name}</Typography>
+                    )}
                   </MenuItem>
                 );
               })}
@@ -306,4 +302,13 @@ function Header() {
     </AppBar>
   );
 }
+
+const StyledBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
+  "& .MuiBadge-badge": {
+    right: -10,
+    top: 5,
+    // border: `2px solid ${theme.palette.background.paper}`,
+    padding: "0 4px",
+  },
+}));
 export default Header;
