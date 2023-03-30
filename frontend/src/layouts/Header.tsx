@@ -46,7 +46,9 @@ function Header() {
   const dispatch = useAppDispatch();
   const authReducer = useSelector(authSelector);
   const personHisReducer = useSelector(personHisSelector);
-  const [navNum, setNavNum] = React.useState(localStorage.getItem("badge"));
+  const [navNum1, setNavNum1] = React.useState(localStorage.getItem("badge"));
+  const [navNum2, setNavNum2] = React.useState(localStorage.getItem("badge2"));
+
   const navigate = useNavigate();
   useEffect(() => {
     console.log(authReducer.authData);
@@ -90,8 +92,31 @@ function Header() {
 
   const changePage = (params: string, pageIndex?: number) => {
     if (pageIndex === 0) {
-      localStorage.setItem("badge", personHisReducer.personAll.length);
-      setNavNum(personHisReducer.personAll.length);
+      localStorage.setItem(
+        "badge",
+        personHisReducer.personAll.filter(
+          (data: any) => data.cancer_check == 0 && data.ca_person_check == 0
+        ).length
+      );
+      setNavNum1(
+        personHisReducer.personAll.filter(
+          (data: any) => data.cancer_check == 0 && data.ca_person_check == 0
+        ).length
+      );
+      navigate(params);
+      handleClose();
+    } else if (pageIndex === 1) {
+      localStorage.setItem(
+        "badge2",
+        personHisReducer.personAll.filter(
+          (data: any) => data.ca_person_check == 1
+        ).length
+      );
+      setNavNum2(
+        personHisReducer.personAll.filter(
+          (data: any) => data.ca_person_check == 1
+        ).length
+      );
       navigate(params);
       handleClose();
     } else {
@@ -230,9 +255,36 @@ function Header() {
                     {index === 0 ? (
                       <StyledBadge
                         badgeContent={
-                          navNum === personHisReducer.personAll.length
+                          navNum1 ===
+                          personHisReducer.personAll.filter(
+                            (data: any, i: number) =>
+                              data.cancer_check == 0 &&
+                              data.ca_person_check == 0
+                          ).length
                             ? 0
-                            : personHisReducer.personAll.length
+                            : personHisReducer.personAll &&
+                              personHisReducer.personAll.filter(
+                                (data: any, i: number) =>
+                                  data.ca_person_check == 0
+                              ).length
+                        }
+                        color="error"
+                      >
+                        <Typography textAlign="center">{data.name}</Typography>
+                      </StyledBadge>
+                    ) : index === 1 ? (
+                      <StyledBadge
+                        badgeContent={
+                          navNum2 ===
+                          personHisReducer.personAll.filter(
+                            (data: any, i: number) => data.ca_person_check == 1
+                          ).length
+                            ? 0
+                            : personHisReducer.personAll &&
+                              personHisReducer.personAll.filter(
+                                (data: any, i: number) =>
+                                  data.ca_person_check == 1
+                              ).length
                         }
                         color="error"
                       >

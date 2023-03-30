@@ -270,7 +270,7 @@ exports.sendData = async (req, res, next) => {
       finance_support_code: req.body.finance_support_code,
       icd10_code: req.body.diagnosis_drg,
     };
-    // console.log(req.body)
+    console.log(cancerRes)
     if (req.body.area_code == "380410") {
       req.body.area_code = "380404";
       req.body.permanent_area_code = "380404";
