@@ -2,7 +2,7 @@
 version: "3.5"
 
 services:
-  backend:
+  backend: 
     build: backend/
     image: ca-backend
     container_name: ca-backend-con
