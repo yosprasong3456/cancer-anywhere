@@ -3,7 +3,7 @@
 
 ### Node ###
 # Logs
-# automation deploy 1
+# automation deploy
 logs
 *.log
 npm-debug.log*
