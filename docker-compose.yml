@@ -16,7 +16,7 @@ services:
     image: ca-fontend
     container_name: ca-fontend-con
     ports:
-      - 83:80
+      - 80:80
     depends_on:
       - backend
     networks:
