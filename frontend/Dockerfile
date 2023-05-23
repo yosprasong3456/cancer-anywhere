@@ -2,7 +2,7 @@
 # docker build -t react_frontend . 
 # docker-compose up -d
 # docker run -d -p 83:80 --name reactfronend react_fontend
-FROM node:lts-alpine AS builder
+FROM node:18-alpine AS builder
 WORKDIR /usr/src/app
 
 COPY package*.json ./
