@@ -35,13 +35,13 @@ const task = cron.schedule('29 16 * * *', async() =>{
 });
 task.start()
 
-// const taskClearQue = cron.schedule('30 18 * * *', async() =>{
-//   const DelQue = await queController.index()
-// }, {
-//   scheduled: true,
-//   timezone: "Asia/Bangkok"
-// });
-// taskClearQue.start()
+const taskClearQue = cron.schedule('40 18 * * *', async() =>{
+  const DelQue = await queController.index()
+}, {
+  scheduled: true,
+  timezone: "Asia/Bangkok"
+});
+taskClearQue.start()
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
