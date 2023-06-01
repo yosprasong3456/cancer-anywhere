@@ -35,7 +35,7 @@ const task = cron.schedule('29 16 * * *', async() =>{
 });
 task.start()
 
-const taskClearQue = cron.schedule('05 19 * * *', async() =>{
+const taskClearQue = cron.schedule('10 19 * * *', async() =>{
   const DelQue = await queController.index()
 }, {
   scheduled: true,
