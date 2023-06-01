@@ -22,6 +22,7 @@ exports.index = async (req, res, next) => {
   try {
     const del1 = await deleteQueue1();
     const del2 = await deleteQueue2();
+    console.log(del1, del2)
   } catch (error) {
     console.log(JSON.stringify(error));
   }
