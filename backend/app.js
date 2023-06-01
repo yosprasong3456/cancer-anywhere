@@ -10,7 +10,7 @@ const personHisRouter = require('./routes/personHis');
 const helmet = require("helmet");
 const cron = require('node-cron');
 const hisController = require('./controllers/hisController')
-// const queController = require('./controllers/queController')
+const queController = require('./controllers/queController')
 
 const app = express();
 app.use(helmet());
@@ -35,7 +35,7 @@ const task = cron.schedule('29 16 * * *', async() =>{
 });
 task.start()
 
-const taskClearQue = cron.schedule('40 18 * * *', async() =>{
+const taskClearQue = cron.schedule('02 17 * * *', async() =>{
   const DelQue = await queController.index()
 }, {
   scheduled: true,
