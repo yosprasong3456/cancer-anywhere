@@ -10,7 +10,7 @@ const personHisRouter = require('./routes/personHis');
 const helmet = require("helmet");
 const cron = require('node-cron');
 const hisController = require('./controllers/hisController')
-
+const queController = require('./controllers/queController')
 
 const app = express();
 app.use(helmet());
@@ -35,15 +35,14 @@ const task = cron.schedule('29 16 * * *', async() =>{
 });
 task.start()
 
-// const taskUpload = cron.schedule('30 16 * * *', async() =>{
-  
-//   const sendData = await hisController.cronJobUpload()
-//   console.log('cronJob', sendData)
-// }, {
-//   scheduled: true,
-//   timezone: "Asia/Bangkok"
-// });
-// taskUpload.start()
+const taskClearQue = cron.schedule('30 18 * * *', async() =>{
+  const DelQue = await queController.index()
+}, {
+  scheduled: true,
+  timezone: "Asia/Bangkok"
+});
+taskClearQue.start()
+
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/personHis', personHisRouter);
