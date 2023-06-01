@@ -1,11 +1,21 @@
-const db = require("../config/db");
-const knex = db.queDB;
+require('dotenv').config();
+
+const knexQue = require('knex')({
+    client: "mysql",
+    connection: {
+      host: process.env.Q_HOST,
+      port: process.env.Q_PORT,
+      user: process.env.Q_USER,
+      password: process.env.Q_PASSWORD,
+      database: process.env.Q_DB,
+    }
+  });
 
 const deleteQueue1 = () => {
-  return knex('opd_2').del()
+  return knexQue('opd_2').del()
 };
 const deleteQueue2 = () => {
-    return knex('opd_queue_systems').del()
+    return knexQue('opd_queue_systems').del()
   };
 
 exports.index = async (req, res, next) => {

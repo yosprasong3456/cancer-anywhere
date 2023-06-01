@@ -1,6 +1,7 @@
 require('dotenv').config();
 
 const knex = require("knex")
+
 module.exports ={
   knexBuilder : knex({
     client: "mysql",
@@ -14,15 +15,15 @@ module.exports ={
   })
 }
 
-module.exports ={
-  queDB : knex({
-    client: "mysql",
-    connection: {
-      host: process.env.Q_HOST,
-      port: process.env.Q_PORT,
-      user: process.env.Q_USER,
-      password: process.env.Q_PASSWORD,
-      database: process.env.Q_DB,
-    },
-  })
-}
+// module.exports ={
+//   queDB : knex1({
+//     client: "mysql",
+//     connection: {
+//       host: process.env.Q_HOST,
+//       port: process.env.Q_PORT,
+//       user: process.env.Q_USER,
+//       password: process.env.Q_PASSWORD,
+//       database: process.env.Q_DB,
+//     },
+//   })
+// }
