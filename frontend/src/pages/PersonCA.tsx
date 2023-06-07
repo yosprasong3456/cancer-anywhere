@@ -2,7 +2,15 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { DataGrid, GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
 import DataTable from "../components/DataTable";
-import { Box, Button, Container, Grid, Grow, Paper } from "@mui/material";
+import {
+  Box,
+  Button,
+  Container,
+  Divider,
+  Grid,
+  Grow,
+  Paper,
+} from "@mui/material";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
@@ -210,6 +218,24 @@ function PersonCA({}: Props) {
     }
   };
 
+  const sendAllPerson = async () => {
+    const person = personHisReducer.personCA.filter(
+      (val: any) => val.cancer_check == 0
+    );
+    person.map(async (val: any) => {
+      const send = await dispatch(sendDataToCA(val));
+      if (send.payload === "success") {
+        enqueueSnackbar(`เพิ่มข้อมูล HN${val.hn} สำเร็จ!`, {
+          variant: "success",
+        });
+      } else {
+        enqueueSnackbar(`เพิ่มข้อมูล HN${val.hn} ล้มเหลว!`, {
+          variant: "error",
+        });
+      }
+    });
+  };
+
   return (
     <Container>
       <Typography variant="h6" sx={{ pt: 3, textAlign: "start" }}>
@@ -295,13 +321,14 @@ function PersonCA({}: Props) {
                     setPersonData={doData}
                     columns={personColumns}
                   />
+
                   <Grid
                     item
                     xs={12}
                     sm={8}
                     md={4}
                     component={Paper}
-                    elevation={6}
+                    elevation={2}
                     square
                     borderRadius={1}
                     p={1}
@@ -313,6 +340,21 @@ function PersonCA({}: Props) {
                     }}
                   >
                     <Box width="100%">
+                      {personHisReducer.personCA.filter(
+                        (val: any) => val.cancer_check == 0
+                      ).length ? (
+                        <Box component="div">
+                          <Button
+                            sx={{ mt: 0.5, mb: 1 }}
+                            variant="contained"
+                            onClick={() => sendAllPerson()}
+                          >
+                            ส่งซ้ำทั้งหมด
+                          </Button>
+                          <Divider />
+                        </Box>
+                      ) : null}
+
                       <Typography variant="h4">ข้อมูลผู้ป่วย</Typography>
                       {personData && <PersonData personData={personData} />}
                     </Box>
