@@ -16,13 +16,17 @@ const deleteQueue1 = () => {
 };
 const deleteQueue2 = () => {
     return knexQue('opd_queue_systems').del()
-  };
+};
+const deleteQueue3 = () => {
+  return knexQue('opd_mr').del()
+};
 
 exports.index = async (req, res, next) => {
   try {
     const del1 = await deleteQueue1();
     const del2 = await deleteQueue2();
-    console.log(del1, del2)
+    const del3 = await deleteQueue3();
+    console.log(del1, del2, del3)
   } catch (error) {
     console.log(JSON.stringify(error));
   }
