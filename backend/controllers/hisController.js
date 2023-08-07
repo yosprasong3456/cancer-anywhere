@@ -150,6 +150,18 @@ const cronLineNoti = async (count1, count2) => {
 
 const uploadData = (params) => {
   delete params.death_date
+  if (params.area_code == "380410") {
+    params.area_code = "380404";
+    params.permanent_area_code = "380404";
+  }
+  if (params.area_code == '843100'){
+    params.area_code = "430111";
+    params.permanent_area_code = "430111";
+  }
+  if (!params.area_code) {
+    params.area_code = "999999";
+    params.permanent_area_code = "999999";
+  }
   return axios.post(base_api + `patient`, params, {
     headers: { Authorization: token },
   });
@@ -272,14 +284,7 @@ exports.sendData = async (req, res, next) => {
       icd10_code: req.body.diagnosis_drg,
     };
     console.log(cancerRes)
-    if (req.body.area_code == "380410") {
-      req.body.area_code = "380404";
-      req.body.permanent_area_code = "380404";
-    }
-    if (!req.body.area_code) {
-      req.body.area_code = "999999";
-      req.body.permanent_area_code = "999999";
-    }
+    
     // console.log(req.body)
     const result = await uploadData(req.body);
     // console.log(result.data)
