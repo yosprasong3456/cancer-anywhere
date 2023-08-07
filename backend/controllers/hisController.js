@@ -149,6 +149,7 @@ const cronLineNoti = async (count1, count2) => {
 };
 
 const uploadData = (params) => {
+  delete params.death_date
   return axios.post(base_api + `patient`, params, {
     headers: { Authorization: token },
   });
