@@ -80,6 +80,7 @@ export const getPersonHisCA = createAsyncThunk(
   "personHis/getPersonHisCA",
   async () => {
     let result = await httpClient.get<any>(server.PERSON_HIS_ALL_CA);
+    console.log('ca', result)
     if (result.data.message == "success") {
       return result.data.data;
     } else {

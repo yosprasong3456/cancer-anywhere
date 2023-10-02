@@ -17,7 +17,7 @@ axios.interceptors.request.use(async (config: any) => {
   if (userToken) {
     config.headers = { Authorization: `Bearer ${userToken}` };
   }
-  config.timeout = 60000; // 20 Second
+  config.timeout = 80000; // 80 Second
   return config;
 });
 

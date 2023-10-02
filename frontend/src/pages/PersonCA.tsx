@@ -74,7 +74,12 @@ function PersonCA({}: Props) {
     setValue(newValue);
   };
   useEffect(() => {
-    dispatch(getPersonHisCA());
+    if(personHisReducer.personAll.length){
+      console.log('if')
+    }else{
+      dispatch(getPersonHisCA());
+    }
+    
     console.log("redux", personHisReducer.personAll);
   }, [dispatch]);
 
