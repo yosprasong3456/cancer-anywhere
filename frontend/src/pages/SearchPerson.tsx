@@ -29,6 +29,7 @@ const SearchPerson = (props: Props) => {
 
   const onSendData = async (params: string) => {
     const sending = await dispatch(sendPersonOne(params));
+    console.log('sending',sending)
     if (sending.payload.message === "success") {
       enqueueSnackbar(`เพิ่มข้อมูลสำเร็จ!`, {
         variant: "success",

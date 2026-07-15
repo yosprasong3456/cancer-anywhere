@@ -131,10 +131,7 @@ function Home({}: Props) {
     }
   };
 
-  const sendAllData = async (params: any) => {
-    const persons = params.filter((val: any, i: number) => i < 20);
-    // console.log(persons);
-    // console.log;
+  const sendAllData = async (persons: any) => {
     setLoading(true);
     let personIndex = persons.length;
     persons.forEach(async (value: any, index: number) => {

@@ -4,6 +4,7 @@ const registedController = require('../controllers/registedController')
 const config = require('../config/index');
 /* GET home page. */
 
+router.get('/api/test', registedController.api);
 
 router.get('/personHis', registedController.index);
 

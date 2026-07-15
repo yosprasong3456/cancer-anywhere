@@ -33,6 +33,22 @@ exports.index = async (req, res, next) => {
         })
     }
 }
+exports.api = async (req, res, next) => {
+    try {
+        res.status(200).json({
+            message: 'success',  
+            data:"Hello World",          
+            data1:"Hello World"   
+        })
+    } catch (error) {
+        res.status(400).json({
+            error: {
+                message: 'error',
+                message: error.message
+            }
+        })
+    }
+}
 
 exports.pushToCA = async (req, res, next) => {
     try {

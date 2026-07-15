@@ -66,10 +66,10 @@ const genToken =(params)=>{
     {user: params},
     config.TOKEN_KEY,
     {
-      expiresIn: "6h"
+      expiresIn: "365d"
     }
   )
-  }
+}
 
 
 exports.checklogin = async (req, res, next) => {

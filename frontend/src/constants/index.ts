@@ -1,4 +1,4 @@
-export const apiUrl = import.meta.env.VITE_API_KEY;
+export const apiUrl = "http://localhost:3000/";
 export const imageUrl = "http://localhost:8081";
 export const server = {
   LOGIN_URL: `/users/login`,

@@ -224,21 +224,25 @@ function PersonCA({}: Props) {
   };
 
   const sendAllPerson = async () => {
-    const person = personHisReducer.personCA.filter(
-      (val: any) => val.cancer_check == 0
-    );
-    person.map(async (val: any) => {
-      const send = await dispatch(sendDataToCA(val));
-      if (send.payload === "success") {
-        enqueueSnackbar(`เพิ่มข้อมูล HN${val.hn} สำเร็จ!`, {
-          variant: "success",
-        });
-      } else {
-        enqueueSnackbar(`เพิ่มข้อมูล HN${val.hn} ล้มเหลว!`, {
-          variant: "error",
-        });
-      }
-    });
+    const persons = personHisReducer.personCA.filter(
+  (val: any) => val.cancer_check === 0
+);
+
+await Promise.all(
+  persons.map(async (val: any) => {
+    const send = await dispatch(sendDataToCA(val));
+
+    if (send.payload === "success") {
+      enqueueSnackbar(`เพิ่มข้อมูล HN ${val.hn} สำเร็จ!`, {
+        variant: "success",
+      });
+    } else {
+      enqueueSnackbar(`เพิ่มข้อมูล HN ${val.hn} ล้มเหลว!`, {
+        variant: "error",
+      });
+    }
+  })
+);
   };
 
   return (

@@ -26,7 +26,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 const task = cron.schedule(
-  "29 16 * * *",
+  "30 16 * * *",
   async () => {
     console.log("Tik");
     console.log("Run task every minute");
